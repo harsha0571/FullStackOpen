@@ -6,6 +6,17 @@ const App = () => {
     return Math.floor(Math.random() * max);
   }
 
+  const handleClick = () => {
+
+    setSelected(getRandomInt(7))
+
+  }
+  const handleVote = () => {
+    const b = votes
+    b[selected] += 1
+    setVotes([...b])
+  }
+
   const anecdotes = [
     'If it hurts, do it more often',
     'Adding manpower to a late software project makes it later!',
@@ -17,13 +28,16 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(0)
-
+  const a = Array(7).fill(0)
+  const [votes, setVotes] = useState(a)
   return (
     <div>
       {anecdotes[selected]}
       <br />
-      <button onClick={() => setSelected(getRandomInt(7))}>next anecdote</button>
-      selected : {selected}
+      has {votes[selected]} votes
+      <br />
+      <button onClick={handleClick}>next anecdote</button>
+      <button onClick={handleVote}>vote for this</button>
     </div >
   )
 }
