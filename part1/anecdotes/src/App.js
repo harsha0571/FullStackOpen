@@ -17,6 +17,21 @@ const App = () => {
     setVotes([...b])
   }
 
+  const maxVote = () => {
+
+    var max = votes[0];
+    var maxIndex = 0;
+
+    for (var i = 1; i < votes.length; i++) {
+      if (votes[i] > max) {
+        maxIndex = i;
+        max = votes[i];
+      }
+    }
+
+    return maxIndex;
+  }
+
   const anecdotes = [
     'If it hurts, do it more often',
     'Adding manpower to a late software project makes it later!',
@@ -38,6 +53,12 @@ const App = () => {
       <br />
       <button onClick={handleClick}>next anecdote</button>
       <button onClick={handleVote}>vote for this</button>
+      <br />
+      Most popular Annecdote:
+      <br />
+      {anecdotes[maxVote()]}
+      and has {votes[maxVote()]}
+
     </div >
   )
 }
