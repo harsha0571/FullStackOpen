@@ -13,29 +13,49 @@ const Statistics = (props) => {
   }
   return (
 
-    <div>
-      <h1>statistics</h1>
-      <StatLine title='good' value={good} />
-      <StatLine title='neutral' value={neutral} />
-      <StatLine title='bad' value={bad} />
-      <StatLine title='total' value={bad + good + neutral} />
-      <StatLine title='average' value={((good * 1) + (bad * -1)) / (bad + good + neutral)} />
-      <StatLine title='postive' value={(good) / (good + bad + neutral)} />
 
-    </div>
+    <table>
+      <tbody>
+        <tr>
+          <td> <h1>statistics</h1> </td>
+        </tr>
+
+        <StatLine title='good' value={good} />
+
+
+        <StatLine title='neutral' value={neutral} />
+
+
+        <StatLine title='bad' value={bad} />
+
+
+        <StatLine title='total' value={bad + good + neutral} />
+
+
+        <StatLine title='average' value={((good * 1) + (bad * -1)) / (bad + good + neutral)} />
+
+
+        <StatLine title='postive' value={(good) / (good + bad + neutral)} />
+
+      </tbody>
+    </table>
+
   )
 }
 
 const Btn = (props) => {
   return (
+
     <button onClick={props.handle}>{props.text}</button>
   )
 }
 const StatLine = (props) => {
   return (
-    <div>
-      <p> {props.title}:  {props.value} </p>
-    </div>
+    <tr>
+      <td>{props.title}:</td>
+      <td>{props.value} </td>
+    </tr>
+
   )
 }
 
