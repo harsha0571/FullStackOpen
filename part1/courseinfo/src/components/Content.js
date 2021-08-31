@@ -4,14 +4,12 @@ const Content = (props) => {
     const part1 = props.part1
     const part2 = props.part2
     const part3 = props.part3
-    const exercises1 = props.exercises1
-    const exercises2 = props.exercises2
-    const exercises3 = props.exercises3
+
     return (
         <div>
-            <Part part={part1} exercise={exercises1} />
-            <Part part={part2} exercise={exercises2} />
-            <Part part={part3} exercise={exercises3} />
+            <Part part={part1.name} exercise={part1.exercises} />
+            <Part part={part2.name} exercise={part2.exercises} />
+            <Part part={part3.name} exercise={part3.exercises} />
         </div>
     )
 }
