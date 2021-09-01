@@ -1,10 +1,9 @@
 import React from 'react'
 
 const Total = (props) => {
-    let total = 0
-    props.parts.parts.forEach(part => {
-        total += part.exercises
-    })
+    const array = props.parts.parts
+    const reducer = (accumulator, curVal) => accumulator + curVal.exercises;
+    let total = array.reduce(reducer, 0)
     return (
         <div>
             <p>Number of exercises {total} </p>
