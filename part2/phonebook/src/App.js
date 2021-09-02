@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 
 const App = () => {
   const [persons, setPersons] = useState([
-    {
-      name: 'Arto Hellas',
-      no: '34-45344'
-    }
+    { name: 'Arto Hellas', no: '34-45344' },
+    { name: 'Ada Lovelace', no: '39-44-5323523' },
+    { name: 'Dan Abramov', no: '12-43-234345' },
+    { name: 'Mary Poppendieck', no: '39-23-6423122' }
   ])
   const [newName, setNewName] = useState('')
   const [newNum, setNewNum] = useState('')
+  const [field, setField] = useState('')
 
   const handleName = (e) => {
     console.log(e.target.value)
@@ -18,6 +19,14 @@ const App = () => {
   const handleNum = (e) => {
     console.log(e.target.value)
     setNewNum(e.target.value)
+
+  }
+
+  const handleField = (e) => {
+
+
+    console.log(e.target.value)
+    setField(e.target.value)
 
   }
   const addPerson = (e) => {
@@ -41,10 +50,18 @@ const App = () => {
       setNewNum('')
     }
   }
-
+  const filterPersons = persons.filter(
+    persons => {
+      return (persons.name.toLowerCase().includes(field.toLowerCase()));
+    }
+  )
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <h2>Filter from list</h2>
+      <input type='text' value={field} onChange={handleField} />
+      <h2>Add a new number</h2>
       <form onSubmit={addPerson}>
         <div>
           name: <input type='text' value={newName} onChange={handleName} />
@@ -58,7 +75,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       {
-        persons.map(person => {
+        filterPersons.map(person => {
           return (
             <div key={person.name}>
               {person.name}  {person.no}
