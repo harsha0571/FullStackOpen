@@ -3,8 +3,7 @@ import React, { useState } from 'react'
 const App = () => {
   const [persons, setPersons] = useState([
     {
-      name: 'Arto Hellas',
-      id: 1
+      name: 'Arto Hellas'
     }
   ])
   const [newName, setNewName] = useState('')
@@ -18,15 +17,21 @@ const App = () => {
 
     e.preventDefault()
 
-    const name = {
-      name: newName,
-      id: persons.length + 1
+    const tempName = {
+      name: newName
     }
 
-    setPersons(persons.concat(name))
-    setNewName('')
 
+    if (persons.some(person => person.name === newName)) {
+      alert(`${newName} is aleardy part of the phonebook`)
+      setNewName('')
+    }
+    else {
+      setPersons(persons.concat(tempName))
+      setNewName('')
+    }
   }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -42,7 +47,7 @@ const App = () => {
       {
         persons.map(person => {
           return (
-            <div key={person.id}>
+            <div key={person.name}>
               {person.name}
             </div>
           )
