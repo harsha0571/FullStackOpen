@@ -28,10 +28,10 @@ const CountryInDetail = ({ country }) => {
         if (toggle) {
             return (
                 <div>
-                    <h2>Weather in {country.capital}</h2>
-                    <h3>temperature:{weather.current.temperature}</h3>
+                    <h2>Weather in {country.capital} </h2>
+                    <h3>temperature:{weather.current.temperature} celsius</h3>
                     <img alt={country.capital} src={weather.current.weather_icons[0]} widht="230px" height="auto" />
-                    <p>Wind speed {weather.current.wind_speed} in {weather.current.wind_dir} direction</p>
+                    <p>Wind speed {weather.current.wind_speed} mph in {weather.current.wind_dir} direction</p>
                 </div>
             )
         }
