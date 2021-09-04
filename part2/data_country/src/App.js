@@ -1,23 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import Country from './components/Country'
+import CountryInDetail from './components/CountryInDetail'
 
-function App() {
+const App = () => {
+
+  const [field, setField] = useState('')
+  const [countries, setCountries] = useState([])
+
+  // const handleField = (e) => {
+  //   setField(e.target.value)
+  // }
+  useEffect(() => {
+
+    axios
+      .get('https://restcountries.eu/rest/v2/all')
+      .then(response => {
+        console.log('promise fulfilled')
+        setCountries(response.data)
+      })
+  }, [])
+
+  const filtered = countries.filter(country => {
+    return (country.name.toLowerCase().includes(field.toLowerCase()))
+  })
+  const toShow = () => {
+    console.log(filtered.length)
+    if (filtered.length > 10) {
+      return (
+        <div>too many results refine query</div>
+      )
+    }
+    else if (filtered.length > 1) {
+      return (
+        filtered.map(country => {
+          return (
+            <Country key={country.name} country={country} />
+          )
+        })
+      )
+    }
+    else if (filtered.length === 1) {
+      return (
+        <CountryInDetail country={filtered[0]} />
+      )
+    }
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div>
+        find countries <input type='text' value={field} onChange={(e) => setField(e.target.value)} />
+      </div>
+      <br />
+      <div>
+        List:
+        {toShow()}
+      </div>
     </div>
   );
 }
