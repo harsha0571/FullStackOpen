@@ -16,11 +16,6 @@
       "id": 3
     },
     {
-      "name": "Mary Poppendieck",
-      "number": "39-23-6423122",
-      "id": 4
-    },
-    {
       "name": "Mary Poppins",
       "number": "34-344-6423452",
       "id": 5
@@ -34,16 +29,6 @@
       "name": "syn",
       "number": "34343",
       "id": 7
-    },
-    {
-      "name": "hae",
-      "number": "434343",
-      "id": 8
-    },
-    {
-      "name": "tarean",
-      "number": "545345",
-      "id": 9
     }
   ]
 }
