@@ -1,3 +1,18 @@
+
+h1 {
+  color:rgb(10, 139, 172);
+  font-style:italic;
+}
+.message{
+  color: rgb(0, 255, 13);
+  background: rgb(210, 233, 200);
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

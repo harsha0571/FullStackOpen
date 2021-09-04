@@ -3,12 +3,14 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import services from './services/Route'
+import Message from './components/Message'
 const App = () => {
 
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNum, setNewNum] = useState('')
   const [field, setField] = useState('')
+  const [message, setMessage] = useState(null)
   useEffect(() => {
     console.log('effect')
     services.getAll()
@@ -55,6 +57,9 @@ const App = () => {
       setPersons(persons.concat(tempName))
       services.create(tempName)
         .then(newPerson => console.log(newPerson))
+
+      setMessage(`user added succesfully`)
+      setTimeout(() => { setMessage(null) }, 2000)
       setNewName('')
       setNewNum('')
     }
@@ -68,8 +73,8 @@ const App = () => {
   )
   return (
     <div>
-      <h2>Phonebook</h2>
-
+      <h1>Phonebook</h1>
+      <Message message={message} />
       <h2>Filter from list</h2>
       <Filter field={field} handleField={handleField} />
       <h2>Add a new number</h2>
