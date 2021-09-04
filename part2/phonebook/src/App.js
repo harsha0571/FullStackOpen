@@ -47,7 +47,13 @@ const App = () => {
       if (window.confirm(`Update  ${eUser.name}'s number`)) {
         const uUser = { ...eUser, number: newNum }
         services.update(eUser.id, uUser)
-          .then(persons => console.log(persons))
+          .then(person => console.log(person))
+          .catch(error => {
+            setMessage(`the user was already deleted from server`)
+            setTimeout(() => { setMessage(null) }, 2000)
+            setPersons(persons.filter(n => n.id !== uUser.id))
+
+          })
       }
       setNewName('')
       setNewNum('')
@@ -88,7 +94,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      <Persons filter={filterPersons} />
+      <Persons fn={setPersons} filter={filterPersons} />
     </div>
   )
 }

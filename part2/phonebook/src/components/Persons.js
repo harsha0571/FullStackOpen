@@ -1,12 +1,12 @@
 import React from 'react'
 import Person from './Person'
-const Persons = ({ filter }) => {
+const Persons = ({ filter, fn, array }) => {
     return (
         <div>
             {
                 filter.map(person => {
                     return (
-                        <Person key={person.name} person={person} />
+                        <Person key={person.name} setPersons={fn} persons={array} person={person} />
                     )
                 })
             }

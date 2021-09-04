@@ -1,11 +1,12 @@
 import React from 'react'
 import services from '../services/Route'
-const Person = ({ person }) => {
+const Person = ({ person, setPersons, persons }) => {
     const delPerson = () => {
 
         if (window.confirm(`Delete ${person.name}`)) {
             services.remove(person.id)
                 .then(persons => console.log(persons))
+            setPersons(persons.filter(n => n.id !== person.id))
         }
 
     }
