@@ -9,7 +9,6 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNum, setNewNum] = useState('')
   const [field, setField] = useState('')
-
   useEffect(() => {
     console.log('effect')
     services.getAll()
@@ -42,9 +41,15 @@ const App = () => {
     }
 
     if (persons.some(person => person.name === newName)) {
-      alert(`${newName} is aleardy part of the phonebook`)
+      const eUser = persons.find(person => person.name === newName)
+      if (window.confirm(`Update  ${eUser.name}'s number`)) {
+        const uUser = { ...eUser, number: newNum }
+        services.update(eUser.id, uUser)
+          .then(persons => console.log(persons))
+      }
       setNewName('')
       setNewNum('')
+
     }
     else {
       setPersons(persons.concat(tempName))
