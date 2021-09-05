@@ -10,8 +10,12 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNum, setNewNum] = useState('')
   const [field, setField] = useState('')
-  const [message, setMessage] = useState(null)
-  //const [messageF, setMesaageF] = useState(null)
+  const intialMessage = {
+    text: null,
+    class: "message"
+  }
+  const [message, setMessage] = useState(intialMessage)
+
   useEffect(() => {
     console.log('effect')
     services.getAll()
@@ -51,8 +55,14 @@ const App = () => {
             setPersons(update)
           })
           .catch(error => {
-            setMessage(`the user was already deleted from server`)
-            setTimeout(() => { setMessage(null) }, 2000)
+            const fail = {
+              text: `the user was already deleted from server`,
+              class: "messageF"
+            }
+            setMessage(fail)
+            setTimeout(() => {
+              setMessage(intialMessage)
+            }, 2000)
             setPersons(persons.filter(n => n.id !== uUser.id))
           })
 
@@ -62,9 +72,14 @@ const App = () => {
       setPersons(persons.concat(tempName))
       services.create(tempName)
         .then(newPerson => console.log(newPerson))
-
-      setMessage(`user added succesfully`)
-      setTimeout(() => { setMessage(null) }, 2000)
+      const success = {
+        text: `user created succesfully`,
+        class: "message"
+      }
+      setMessage(success)
+      setTimeout(() => {
+        setMessage(intialMessage)
+      }, 2000)
     }
     setNewName('')
     setNewNum('')
