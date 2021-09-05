@@ -13,6 +13,16 @@ h1 {
   margin-bottom: 10px;
 
 }
+.messageF{
+  color: rgb(255, 5, 5);
+  background: rgb(248, 122, 128);
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

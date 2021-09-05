@@ -11,6 +11,7 @@ const App = () => {
   const [newNum, setNewNum] = useState('')
   const [field, setField] = useState('')
   const [message, setMessage] = useState(null)
+  //const [messageF, setMesaageF] = useState(null)
   useEffect(() => {
     console.log('effect')
     services.getAll()
@@ -20,17 +21,14 @@ const App = () => {
   }, [])
 
   const handleName = (e) => {
-    console.log(e.target.value)
     setNewName(e.target.value)
 
   }
   const handleNum = (e) => {
-    console.log(e.target.value)
     setNewNum(e.target.value)
   }
 
   const handleField = (e) => {
-    console.log(e.target.value)
     setField(e.target.value)
   }
 
@@ -47,17 +45,18 @@ const App = () => {
       if (window.confirm(`Update  ${eUser.name}'s number`)) {
         const uUser = { ...eUser, number: newNum }
         services.update(eUser.id, uUser)
-          .then(person => console.log(person))
+          .then(person => {
+            console.log(person)
+            const update = persons.map(u => (u.id === uUser.id ? uUser : u))
+            setPersons(update)
+          })
           .catch(error => {
             setMessage(`the user was already deleted from server`)
             setTimeout(() => { setMessage(null) }, 2000)
             setPersons(persons.filter(n => n.id !== uUser.id))
-
           })
-      }
-      setNewName('')
-      setNewNum('')
 
+      }
     }
     else {
       setPersons(persons.concat(tempName))
@@ -66,10 +65,9 @@ const App = () => {
 
       setMessage(`user added succesfully`)
       setTimeout(() => { setMessage(null) }, 2000)
-      setNewName('')
-      setNewNum('')
     }
-
+    setNewName('')
+    setNewNum('')
 
   }
   const filterPersons = persons.filter(
@@ -94,7 +92,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      <Persons fn={setPersons} filter={filterPersons} />
+      <Persons fn={setPersons} array={persons} filter={filterPersons} />
     </div>
   )
 }

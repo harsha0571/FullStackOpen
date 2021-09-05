@@ -5,7 +5,7 @@ const Person = ({ person, setPersons, persons }) => {
 
         if (window.confirm(`Delete ${person.name}`)) {
             services.remove(person.id)
-                .then(persons => console.log(persons))
+                .then(personR => console.log(personR))
             setPersons(persons.filter(n => n.id !== person.id))
         }
 
