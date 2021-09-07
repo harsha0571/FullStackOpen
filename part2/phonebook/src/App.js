@@ -48,42 +48,64 @@ const App = () => {
       const eUser = persons.find(person => person.name === newName)
       if (window.confirm(`Update  ${eUser.name}'s number`)) {
         const uUser = { ...eUser, number: newNum }
-        services.update(eUser.id, uUser)
+        services.update(uUser.id, uUser)
           .then(person => {
-            console.log(person)
+            console.log("update:", person)
             const update = persons.map(u => (u.id === uUser.id ? uUser : u))
             setPersons(update)
           })
-          .catch(error => {
+          .catch(err => {
             const fail = {
               text: `the user was already deleted from server`,
               class: "messageF"
             }
-            setMessage(fail)
-            setTimeout(() => {
-              setMessage(intialMessage)
-            }, 2000)
-            setPersons(persons.filter(n => n.id !== uUser.id))
-          })
 
+            if (err.response.status === 403) {
+              const fail = {
+                text: err.response.data.error,
+                class: "messageF"
+              }
+              setMessage(fail)
+              setTimeout(() => {
+                setMessage(intialMessage)
+              }, 3000)
+            }
+            else {
+              setMessage(fail)
+              setTimeout(() => {
+                setMessage(intialMessage)
+              }, 3000)
+              setPersons(persons.filter(n => n.id !== uUser.id))
+            }
+          })
       }
     }
     else {
-      setPersons(persons.concat(tempName))
-      services.create(tempName)
-        .then(newPerson => console.log(newPerson))
       const success = {
         text: `user created succesfully`,
         class: "message"
       }
-      setMessage(success)
-      setTimeout(() => {
-        setMessage(intialMessage)
-      }, 2000)
+      services.create(tempName)
+        .then(newPerson => {
+          setPersons(persons.concat(newPerson))
+          setMessage(success)
+          setTimeout(() => {
+            setMessage(intialMessage)
+          }, 3000)
+        })
+        .catch(err => {
+          const inValid = {
+            text: err.response.data.error,
+            class: "messageF"
+          }
+          setMessage(inValid)
+          setTimeout(() => {
+            setMessage(intialMessage)
+          }, 3000)
+        })
     }
     setNewName('')
     setNewNum('')
-
   }
   const filterPersons = persons.filter(
     persons => {
@@ -92,7 +114,7 @@ const App = () => {
   )
   return (
     <div>
-      <h1>Phonebook</h1>
+      <h1>Phonebook with backend</h1>
       <Message message={message} />
       <h2>Filter from list</h2>
       <Filter field={field} handleField={handleField} />
