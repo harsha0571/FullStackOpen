@@ -105,3 +105,39 @@ describe('dummy test ', () => {
         expect(result).toBe(1)
     })
 })
+
+describe('most blogs of a author', () => {
+    const blogs = [
+        {
+            author: "tren"
+        },
+        {
+            author: "ren"
+        },
+        {
+            author: "tren"
+        },
+        {
+            author: "ren"
+        },
+        {
+            author: "tren"
+        },
+    ]
+    const ans = {
+        author: "tren",
+        blogs: 3
+    }
+
+    test('no entries in blog', () => {
+
+        const result = listHelper.mostBlogs([])
+        expect(result).toEqual({})
+    })
+
+    test('no of blogs of a author', () => {
+
+        const result = listHelper.mostBlogs(blogs)
+        expect(result).toEqual(ans)
+    })
+})
