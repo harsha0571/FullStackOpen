@@ -32,7 +32,7 @@ const mostLiked = (blogs) => {
 const mostBlogs = (blogs) => {
 
 
-    function findOcc(arr, key) {
+    function findOccBlogs(arr, key) {
         let arr2 = [];
 
         arr.forEach((x) => {
@@ -56,7 +56,7 @@ const mostBlogs = (blogs) => {
         return arr2
     }
 
-    var authorBlogs = findOcc(blogs, "author")
+    var authorBlogs = findOccBlogs(blogs, "author")
     var max = 0
     var res = {}
     authorBlogs.forEach(val => {
@@ -65,10 +65,49 @@ const mostBlogs = (blogs) => {
             res = val
         }
     })
-    console.log(res)
+
     return res
 
 }
-module.exports = { dummy, totalLikes, mostLiked, mostBlogs }
+const mostLikes = (blogs) => {
+
+    function findOccLikes(arr, key) {
+        let arr2 = [];
+
+        arr.forEach((x) => {
+
+            if (arr2.some((val) => { return val[key] == x[key] })) {
+
+                arr2.forEach((k) => {
+                    if (k[key] === x[key]) {
+                        k["likes"] += parseInt(x["likes"])
+                    }
+                })
+
+            } else {
+                let a = {}
+                a[key] = x[key]
+                a["likes"] = parseInt(x["likes"])
+                arr2.push(a);
+            }
+        })
+
+        return arr2
+    }
+    var authorLikes = findOccLikes(blogs, "author")
+
+    var max = 0
+    var res = {}
+    authorLikes.forEach(val => {
+        if (val.likes > max) {
+            max = val.likes
+            res = val
+        }
+    })
+
+    return res
+
+}
+module.exports = { dummy, totalLikes, mostLiked, mostBlogs, mostLikes }
 
 

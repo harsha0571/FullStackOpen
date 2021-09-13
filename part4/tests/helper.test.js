@@ -141,3 +141,44 @@ describe('most blogs of a author', () => {
         expect(result).toEqual(ans)
     })
 })
+
+describe('most liked author', () => {
+    const blogs = [
+        {
+            author: "tren",
+            likes: "4"
+        },
+        {
+            author: "ren",
+            likes: "3"
+        },
+        {
+            author: "tren",
+            likes: "2"
+        },
+        {
+            author: "ren",
+            likes: "20"
+        },
+        {
+            author: "tren",
+            likes: "1"
+        },
+    ]
+    const ans = {
+        author: "ren",
+        likes: 23
+    }
+
+    test('no entries in blog', () => {
+
+        const result = listHelper.mostLikes([])
+        expect(result).toEqual({})
+    })
+
+    test('no of likes of most liked author', () => {
+
+        const result = listHelper.mostLikes(blogs)
+        expect(result).toEqual(ans)
+    })
+})
