@@ -53,10 +53,55 @@ describe('total likes', () => {
         expect(result).toBe(16)
     })
 })
+describe('most liked blog', () => {
 
-test('dummy returns one', () => {
-    const blogs = []
+    const ans = {
+        title: "Canonical string reduction",
+        author: "Edsger W. Dijkstra",
+        likes: 12
+    }
+    const listWihtMultipleBlogs = [
+        {
+            title: "Canonical string reduction",
+            author: "Edsger W. Dijkstra",
+            likes: 12
+        },
+        {
+            title: 'Go To Statement Considered Harmful',
+            author: 'Edsger W. Dijkstra',
+            likes: 5
+        },
+        {
+            title: "harry porter",
+            author: "jk rowling ",
+            likes: 4
+        },
+        {
+            title: "harry porter",
+            author: "jk rowling ",
+            likes: 7
+        }
+    ]
+    test('for emptly list result is also empty', () => {
+        const result = listHelper.mostLiked([])
+        expect(result).toEqual([])
+    })
+    test('for single object it is the object itself', () => {
+        const result = listHelper.mostLiked([].concat(ans))
+        expect(result).toEqual(ans)
+    })
+    test('for multiple it is working', () => {
+        const result = listHelper.mostLiked(listWihtMultipleBlogs)
+        expect(result).toEqual(ans)
+    })
 
-    const result = listHelper.dummy(blogs)
-    expect(result).toBe(1)
+})
+
+describe('dummy test ', () => {
+    test('dummy returns one', () => {
+        const blogs = []
+
+        const result = listHelper.dummy(blogs)
+        expect(result).toBe(1)
+    })
 })
