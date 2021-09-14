@@ -7,17 +7,28 @@ const helper = require('../utils/test_helper')
 const intialBlog = helper.intialBlogs
 beforeEach(async () => {
     await Blog.deleteMany({})
-    intialBlog.forEach(async (blog) => {
-        let blogObject = new Blog(blog)
-        await blogObject.save()
-        console.log('save')
+    const blogObjects = intialBlog
+        .map(blog => new Blog(blog))
+
+    const promiseArray = blogObjects.map(blog => {
+        blog.save()
+        console.log("save")
     })
-    console.log('done')
+    await Promise.all(promiseArray)
+    console.log("done")
 })
 
 test('all blogs are returned as json', async () => {
     const res = await api.get('/api/blogs')
     expect(res.body).toHaveLength(intialBlog.length)
+})
+
+test('verify id ', async () => {
+    const res = await api.get('/api/blogs')
+    const returnID = () => {
+        return res.body[2]
+    }
+    expect(returnID()).toBeDefined();
 })
 
 
