@@ -11,8 +11,18 @@ blogRouter.get('/', async (request, response) => {
 blogRouter.post('/', async (request, response) => {
     const blog = new Blog(request.body)
     console.log("blog to be posted", blog)
-    const newBlog = await blog.save()
-    response.status(201).json(newBlog)
+
+    if (blog.url === undefined || blog.title === undefined) {
+        response.status(400).json({ error: 'url or title not provided' })
+    }
+    else {
+        const newBlog = await blog.save()
+        response.status(201).json(newBlog)
+    }
+
+
+
+
 
 })
 

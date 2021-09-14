@@ -61,6 +61,17 @@ test('verify post likes is 0 by default if none mentioned ', async () => {
     expect(res.body.likes).toBe(0)
 }, 10000)
 
+test('verify if post body has tile and url', async () => {
+    const newBlog = {
+        author: "nureia"
+    }
+    const res = await api.post('/api/blogs')
+        .send(newBlog)
+
+    expect(res.status).toBe(400)
+
+}, 10000)
+
 afterAll(() => {
     mongoose.connection.close()
 })
