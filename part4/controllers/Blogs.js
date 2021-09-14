@@ -10,8 +10,9 @@ blogRouter.get('/', async (request, response) => {
 
 blogRouter.post('/', async (request, response) => {
     const blog = new Blog(request.body)
+    console.log("blog to be posted", blog)
     const newBlog = await blog.save()
-    response.status(201).json(result)
+    response.status(201).json(newBlog)
 
 })
 
