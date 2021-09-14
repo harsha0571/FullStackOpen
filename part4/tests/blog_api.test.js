@@ -46,6 +46,21 @@ test('verify post blog', async () => {
     expect(newBlogs).toHaveLength(intialBlog.length + 1)
 }, 10000)
 
+test('verify post likes is 0 by default if none mentioned ', async () => {
+    const newBlog = {
+        title: "hungli",
+        author: "nureia",
+        url: "google.com",
+    }
+
+    const res = await api.post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+
+
+    expect(res.body.likes).toBe(0)
+}, 10000)
+
 afterAll(() => {
     mongoose.connection.close()
 })
