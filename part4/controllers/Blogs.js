@@ -1,6 +1,7 @@
 const blogRouter = require('express').Router()
 const { result } = require('lodash')
 const Blog = require('../models/Blog')
+const User = require('../models/User')
 
 blogRouter.get('/', async (request, response) => {
 
@@ -9,14 +10,25 @@ blogRouter.get('/', async (request, response) => {
 })
 
 blogRouter.post('/', async (request, response) => {
-    const blog = new Blog(request.body)
-    console.log("blog to be posted", blog)
+    const body = request.body
+    const user = await User.findById(body.userID)
+    console.log("hweere ", user)
 
+    const blog = new Blog({
+        title: body.title,
+        author: body.author,
+        url: body.url,
+        likes: body.likes,
+        user: user._id
+
+    })
     if (blog.url === undefined || blog.title === undefined) {
         response.status(400).json({ error: 'url or title not provided' })
     }
     else {
         const newBlog = await blog.save()
+        user.blogs = user.blogs.concat(newBlog._id)
+        await user.save()
         response.status(201).json(newBlog)
     }
 })
