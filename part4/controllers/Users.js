@@ -1,9 +1,11 @@
 const userRouter = require('express').Router()
 const User = require('../models/User')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 userRouter.post('/new', async (req, res, next) => {
     const body = req.body
-    const passwordHash = await bcrypt.hash(body.password, 10)
+
+    let passwordHash = bcrypt.hashSync(body.password, 10)
+
     const newUser = {
         username: body.username,
         name: body.name,
