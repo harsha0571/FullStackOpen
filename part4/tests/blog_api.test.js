@@ -5,7 +5,10 @@ const Blog = require('../models/Blog')
 const api = supertest(app)
 const helper = require('../utils/test_helper')
 const intialBlog = helper.intialBlogs
+
 beforeEach(async () => {
+
+
     await Blog.deleteMany({})
     const blogObjects = intialBlog
         .map(blog => new Blog(blog))
@@ -16,10 +19,11 @@ beforeEach(async () => {
     })
     await Promise.all(promiseArray)
     console.log("done")
-})
+}, 100000)
 
 test('all blogs are returned as json', async () => {
     const res = await api.get('/api/blogs')
+
     expect(res.body).toHaveLength(intialBlog.length)
 })
 
@@ -71,6 +75,24 @@ test('verify if post body has tile and url', async () => {
     expect(res.status).toBe(400)
 
 }, 10000)
+
+test('verify if after token auth is working', async () => {
+    const token = helper.token
+    const newblog = {
+        title: "shiva trioloy the end 3453545",
+        author: "amish continued",
+        url: "amish.com",
+        likes: "232",
+        userID: "6142fed9f529ad16d120b8aa"
+    }
+    const res = await api.post('./api/blogs')
+        .set({ Authorization: token })
+        .send(newblog)
+        .expect(201)
+
+    expect(res.body).toEqual(newBlog)
+})
+
 
 afterAll(() => {
     mongoose.connection.close()
